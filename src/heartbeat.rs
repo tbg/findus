@@ -1,0 +1,930 @@
+// This file is generated. Do not edit
+
+#![allow(dead_code)]
+#![allow(non_camel_case_types)]
+#![allow(non_upper_case_globals)]
+#![allow(unused_imports)]
+
+use protobuf::Message as Message_imported_for_functions;
+use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
+
+#[derive(Clone,Default)]
+pub struct RemoteOffset {
+    // message fields
+    offset: ::std::option::Option<i64>,
+    error: ::std::option::Option<i64>,
+    measured_at: ::std::option::Option<i64>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::std::cell::Cell<u32>,
+}
+
+impl RemoteOffset {
+    pub fn new() -> RemoteOffset {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static RemoteOffset {
+        static mut instance: ::protobuf::lazy::Lazy<RemoteOffset> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RemoteOffset,
+        };
+        unsafe {
+            instance.get(|| {
+                RemoteOffset {
+                    offset: ::std::option::Option::None,
+                    error: ::std::option::Option::None,
+                    measured_at: ::std::option::Option::None,
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
+        }
+    }
+
+    // optional int64 offset = 1;
+
+    pub fn clear_offset(&mut self) {
+        self.offset = ::std::option::Option::None;
+    }
+
+    pub fn has_offset(&self) -> bool {
+        self.offset.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_offset(&mut self, v: i64) {
+        self.offset = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_offset<'a>(&self) -> i64 {
+        self.offset.unwrap_or(0)
+    }
+
+    // optional int64 error = 2;
+
+    pub fn clear_error(&mut self) {
+        self.error = ::std::option::Option::None;
+    }
+
+    pub fn has_error(&self) -> bool {
+        self.error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: i64) {
+        self.error = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_error<'a>(&self) -> i64 {
+        self.error.unwrap_or(0)
+    }
+
+    // optional int64 measured_at = 3;
+
+    pub fn clear_measured_at(&mut self) {
+        self.measured_at = ::std::option::Option::None;
+    }
+
+    pub fn has_measured_at(&self) -> bool {
+        self.measured_at.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_measured_at(&mut self, v: i64) {
+        self.measured_at = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_measured_at<'a>(&self) -> i64 {
+        self.measured_at.unwrap_or(0)
+    }
+}
+
+impl ::protobuf::Message for RemoteOffset {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = try!(is.read_int64());
+                    self.offset = ::std::option::Option::Some(tmp);
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = try!(is.read_int64());
+                    self.error = ::std::option::Option::Some(tmp);
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = try!(is.read_int64());
+                    self.measured_at = ::std::option::Option::Some(tmp);
+                },
+                _ => {
+                    let unknown = try!(is.read_unknown(wire_type));
+                    self.mut_unknown_fields().add_value(field_number, unknown);
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in self.offset.iter() {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        for value in self.error.iter() {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        for value in self.measured_at.iter() {
+            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(v) = self.offset {
+            try!(os.write_int64(1, v));
+        };
+        if let Some(v) = self.error {
+            try!(os.write_int64(2, v));
+        };
+        if let Some(v) = self.measured_at {
+            try!(os.write_int64(3, v));
+        };
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields<'s>(&'s self) -> &'s ::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields<'s>(&'s mut self) -> &'s mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<RemoteOffset>()
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for RemoteOffset {
+    fn new() -> RemoteOffset {
+        RemoteOffset::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<RemoteOffset>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_i64_accessor(
+                    "offset",
+                    RemoteOffset::has_offset,
+                    RemoteOffset::get_offset,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_i64_accessor(
+                    "error",
+                    RemoteOffset::has_error,
+                    RemoteOffset::get_error,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_i64_accessor(
+                    "measured_at",
+                    RemoteOffset::has_measured_at,
+                    RemoteOffset::get_measured_at,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<RemoteOffset>(
+                    "RemoteOffset",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for RemoteOffset {
+    fn clear(&mut self) {
+        self.clear_offset();
+        self.clear_error();
+        self.clear_measured_at();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::cmp::PartialEq for RemoteOffset {
+    fn eq(&self, other: &RemoteOffset) -> bool {
+        self.offset == other.offset &&
+        self.error == other.error &&
+        self.measured_at == other.measured_at &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
+impl ::std::fmt::Debug for RemoteOffset {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+#[derive(Clone,Default)]
+pub struct PingRequest {
+    // message fields
+    ping: ::protobuf::SingularField<::std::string::String>,
+    offset: ::protobuf::SingularPtrField<RemoteOffset>,
+    addr: ::protobuf::SingularField<::std::string::String>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::std::cell::Cell<u32>,
+}
+
+impl PingRequest {
+    pub fn new() -> PingRequest {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static PingRequest {
+        static mut instance: ::protobuf::lazy::Lazy<PingRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const PingRequest,
+        };
+        unsafe {
+            instance.get(|| {
+                PingRequest {
+                    ping: ::protobuf::SingularField::none(),
+                    offset: ::protobuf::SingularPtrField::none(),
+                    addr: ::protobuf::SingularField::none(),
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
+        }
+    }
+
+    // optional string ping = 1;
+
+    pub fn clear_ping(&mut self) {
+        self.ping.clear();
+    }
+
+    pub fn has_ping(&self) -> bool {
+        self.ping.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ping(&mut self, v: ::std::string::String) {
+        self.ping = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_ping<'a>(&'a mut self) -> &'a mut ::std::string::String {
+        if self.ping.is_none() {
+            self.ping.set_default();
+        };
+        self.ping.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_ping(&mut self) -> ::std::string::String {
+        self.ping.take().unwrap_or_else(|| ::std::string::String::new())
+    }
+
+    pub fn get_ping<'a>(&'a self) -> &'a str {
+        match self.ping.as_ref() {
+            Some(v) => &v,
+            None => "",
+        }
+    }
+
+    // optional .cockroach.proto.RemoteOffset offset = 2;
+
+    pub fn clear_offset(&mut self) {
+        self.offset.clear();
+    }
+
+    pub fn has_offset(&self) -> bool {
+        self.offset.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_offset(&mut self, v: RemoteOffset) {
+        self.offset = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_offset<'a>(&'a mut self) -> &'a mut RemoteOffset {
+        if self.offset.is_none() {
+            self.offset.set_default();
+        };
+        self.offset.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_offset(&mut self) -> RemoteOffset {
+        self.offset.take().unwrap_or_else(|| RemoteOffset::new())
+    }
+
+    pub fn get_offset<'a>(&'a self) -> &'a RemoteOffset {
+        self.offset.as_ref().unwrap_or_else(|| RemoteOffset::default_instance())
+    }
+
+    // optional string addr = 3;
+
+    pub fn clear_addr(&mut self) {
+        self.addr.clear();
+    }
+
+    pub fn has_addr(&self) -> bool {
+        self.addr.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_addr(&mut self, v: ::std::string::String) {
+        self.addr = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_addr<'a>(&'a mut self) -> &'a mut ::std::string::String {
+        if self.addr.is_none() {
+            self.addr.set_default();
+        };
+        self.addr.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_addr(&mut self) -> ::std::string::String {
+        self.addr.take().unwrap_or_else(|| ::std::string::String::new())
+    }
+
+    pub fn get_addr<'a>(&'a self) -> &'a str {
+        match self.addr.as_ref() {
+            Some(v) => &v,
+            None => "",
+        }
+    }
+}
+
+impl ::protobuf::Message for PingRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = self.ping.set_default();
+                    try!(is.read_string_into(tmp))
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = self.offset.set_default();
+                    try!(is.merge_message(tmp))
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = self.addr.set_default();
+                    try!(is.read_string_into(tmp))
+                },
+                _ => {
+                    let unknown = try!(is.read_unknown(wire_type));
+                    self.mut_unknown_fields().add_value(field_number, unknown);
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in self.ping.iter() {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        for value in self.offset.iter() {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in self.addr.iter() {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(v) = self.ping.as_ref() {
+            try!(os.write_string(1, &v));
+        };
+        if let Some(v) = self.offset.as_ref() {
+            try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
+        };
+        if let Some(v) = self.addr.as_ref() {
+            try!(os.write_string(3, &v));
+        };
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields<'s>(&'s self) -> &'s ::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields<'s>(&'s mut self) -> &'s mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<PingRequest>()
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for PingRequest {
+    fn new() -> PingRequest {
+        PingRequest::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<PingRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
+                    "ping",
+                    PingRequest::has_ping,
+                    PingRequest::get_ping,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
+                    "offset",
+                    PingRequest::has_offset,
+                    PingRequest::get_offset,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
+                    "addr",
+                    PingRequest::has_addr,
+                    PingRequest::get_addr,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<PingRequest>(
+                    "PingRequest",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for PingRequest {
+    fn clear(&mut self) {
+        self.clear_ping();
+        self.clear_offset();
+        self.clear_addr();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::cmp::PartialEq for PingRequest {
+    fn eq(&self, other: &PingRequest) -> bool {
+        self.ping == other.ping &&
+        self.offset == other.offset &&
+        self.addr == other.addr &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
+impl ::std::fmt::Debug for PingRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+#[derive(Clone,Default)]
+pub struct PingResponse {
+    // message fields
+    pong: ::protobuf::SingularField<::std::string::String>,
+    server_time: ::std::option::Option<i64>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::std::cell::Cell<u32>,
+}
+
+impl PingResponse {
+    pub fn new() -> PingResponse {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static PingResponse {
+        static mut instance: ::protobuf::lazy::Lazy<PingResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const PingResponse,
+        };
+        unsafe {
+            instance.get(|| {
+                PingResponse {
+                    pong: ::protobuf::SingularField::none(),
+                    server_time: ::std::option::Option::None,
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
+        }
+    }
+
+    // optional string pong = 1;
+
+    pub fn clear_pong(&mut self) {
+        self.pong.clear();
+    }
+
+    pub fn has_pong(&self) -> bool {
+        self.pong.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pong(&mut self, v: ::std::string::String) {
+        self.pong = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_pong<'a>(&'a mut self) -> &'a mut ::std::string::String {
+        if self.pong.is_none() {
+            self.pong.set_default();
+        };
+        self.pong.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_pong(&mut self) -> ::std::string::String {
+        self.pong.take().unwrap_or_else(|| ::std::string::String::new())
+    }
+
+    pub fn get_pong<'a>(&'a self) -> &'a str {
+        match self.pong.as_ref() {
+            Some(v) => &v,
+            None => "",
+        }
+    }
+
+    // optional int64 server_time = 2;
+
+    pub fn clear_server_time(&mut self) {
+        self.server_time = ::std::option::Option::None;
+    }
+
+    pub fn has_server_time(&self) -> bool {
+        self.server_time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_server_time(&mut self, v: i64) {
+        self.server_time = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_server_time<'a>(&self) -> i64 {
+        self.server_time.unwrap_or(0)
+    }
+}
+
+impl ::protobuf::Message for PingResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = self.pong.set_default();
+                    try!(is.read_string_into(tmp))
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::ProtobufError::WireError("unexpected wire type".to_string()));
+                    };
+                    let tmp = try!(is.read_int64());
+                    self.server_time = ::std::option::Option::Some(tmp);
+                },
+                _ => {
+                    let unknown = try!(is.read_unknown(wire_type));
+                    self.mut_unknown_fields().add_value(field_number, unknown);
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in self.pong.iter() {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        for value in self.server_time.iter() {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(v) = self.pong.as_ref() {
+            try!(os.write_string(1, &v));
+        };
+        if let Some(v) = self.server_time {
+            try!(os.write_int64(2, v));
+        };
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields<'s>(&'s self) -> &'s ::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields<'s>(&'s mut self) -> &'s mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<PingResponse>()
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for PingResponse {
+    fn new() -> PingResponse {
+        PingResponse::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<PingResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
+                    "pong",
+                    PingResponse::has_pong,
+                    PingResponse::get_pong,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_i64_accessor(
+                    "server_time",
+                    PingResponse::has_server_time,
+                    PingResponse::get_server_time,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<PingResponse>(
+                    "PingResponse",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for PingResponse {
+    fn clear(&mut self) {
+        self.clear_pong();
+        self.clear_server_time();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::cmp::PartialEq for PingResponse {
+    fn eq(&self, other: &PingResponse) -> bool {
+        self.pong == other.pong &&
+        self.server_time == other.server_time &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
+impl ::std::fmt::Debug for PingResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+static file_descriptor_proto_data: &'static [u8] = &[
+    0x0a, 0x1f, 0x63, 0x6f, 0x63, 0x6b, 0x72, 0x6f, 0x61, 0x63, 0x68, 0x2f, 0x70, 0x72, 0x6f, 0x74,
+    0x6f, 0x2f, 0x68, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+    0x6f, 0x12, 0x0f, 0x63, 0x6f, 0x63, 0x6b, 0x72, 0x6f, 0x61, 0x63, 0x68, 0x2e, 0x70, 0x72, 0x6f,
+    0x74, 0x6f, 0x22, 0x42, 0x0a, 0x0c, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x4f, 0x66, 0x66, 0x73,
+    0x65, 0x74, 0x12, 0x0e, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01,
+    0x28, 0x03, 0x12, 0x0d, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28,
+    0x03, 0x12, 0x13, 0x0a, 0x0b, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x64, 0x5f, 0x61, 0x74,
+    0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x22, 0x58, 0x0a, 0x0b, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65,
+    0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0c, 0x0a, 0x04, 0x70, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20,
+    0x01, 0x28, 0x09, 0x12, 0x2d, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x02, 0x20,
+    0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x63, 0x6f, 0x63, 0x6b, 0x72, 0x6f, 0x61, 0x63, 0x68, 0x2e,
+    0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x4f, 0x66, 0x66, 0x73,
+    0x65, 0x74, 0x12, 0x0c, 0x0a, 0x04, 0x61, 0x64, 0x64, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+    0x22, 0x31, 0x0a, 0x0c, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+    0x12, 0x0c, 0x0a, 0x04, 0x70, 0x6f, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x12, 0x13,
+    0x0a, 0x0b, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20,
+    0x01, 0x28, 0x03, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x4a, 0xad, 0x0d, 0x0a,
+    0x06, 0x12, 0x04, 0x00, 0x00, 0x25, 0x01, 0x0a, 0x08, 0x0a, 0x01, 0x02, 0x12, 0x03, 0x02, 0x08,
+    0x17, 0x0a, 0x08, 0x0a, 0x01, 0x08, 0x12, 0x03, 0x04, 0x00, 0x1c, 0x0a, 0x0b, 0x0a, 0x04, 0x08,
+    0xe7, 0x07, 0x00, 0x12, 0x03, 0x04, 0x00, 0x1c, 0x0a, 0x0c, 0x0a, 0x05, 0x08, 0xe7, 0x07, 0x00,
+    0x02, 0x12, 0x03, 0x04, 0x07, 0x11, 0x0a, 0x0d, 0x0a, 0x06, 0x08, 0xe7, 0x07, 0x00, 0x02, 0x00,
+    0x12, 0x03, 0x04, 0x07, 0x11, 0x0a, 0x0e, 0x0a, 0x07, 0x08, 0xe7, 0x07, 0x00, 0x02, 0x00, 0x01,
+    0x12, 0x03, 0x04, 0x07, 0x11, 0x0a, 0x0c, 0x0a, 0x05, 0x08, 0xe7, 0x07, 0x00, 0x07, 0x12, 0x03,
+    0x04, 0x14, 0x1b, 0x0a, 0xc9, 0x03, 0x0a, 0x02, 0x04, 0x00, 0x12, 0x04, 0x0c, 0x00, 0x13, 0x01,
+    0x1a, 0xbc, 0x03, 0x20, 0x52, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74,
+    0x20, 0x6b, 0x65, 0x65, 0x70, 0x73, 0x20, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x20, 0x6f, 0x66, 0x20,
+    0x74, 0x68, 0x69, 0x73, 0x20, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x27, 0x73, 0x20, 0x65, 0x73,
+    0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x20, 0x6f, 0x66, 0x20, 0x69, 0x74, 0x73, 0x20, 0x6f, 0x66,
+    0x66, 0x73, 0x65, 0x74, 0x20, 0x66, 0x72, 0x6f, 0x6d, 0x20, 0x61, 0x0a, 0x20, 0x20, 0x72, 0x65,
+    0x6d, 0x6f, 0x74, 0x65, 0x20, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x20, 0x45, 0x72, 0x72,
+    0x6f, 0x72, 0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6d, 0x61, 0x78, 0x69, 0x6d, 0x75,
+    0x6d, 0x20, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x20, 0x69, 0x6e, 0x20, 0x74, 0x68, 0x65, 0x20, 0x72,
+    0x65, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x20, 0x6f, 0x66, 0x20, 0x74, 0x68, 0x69, 0x73, 0x20, 0x6f,
+    0x66, 0x66, 0x73, 0x65, 0x74, 0x2c, 0x20, 0x73, 0x6f, 0x0a, 0x20, 0x20, 0x74, 0x68, 0x61, 0x74,
+    0x20, 0x74, 0x68, 0x65, 0x20, 0x72, 0x65, 0x61, 0x6c, 0x20, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74,
+    0x20, 0x73, 0x68, 0x6f, 0x75, 0x6c, 0x64, 0x20, 0x62, 0x65, 0x20, 0x69, 0x6e, 0x20, 0x74, 0x68,
+    0x65, 0x20, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x20, 0x5b, 0x4f, 0x66, 0x66, 0x73,
+    0x65, 0x74, 0x20, 0x2d, 0x20, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x2c, 0x20, 0x4f, 0x66, 0x66, 0x73,
+    0x65, 0x74, 0x0a, 0x20, 0x20, 0x2b, 0x20, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x5d, 0x2e, 0x20, 0x49,
+    0x66, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6c, 0x61, 0x73, 0x74, 0x20, 0x68, 0x65, 0x61, 0x72, 0x74,
+    0x62, 0x65, 0x61, 0x74, 0x20, 0x74, 0x69, 0x6d, 0x65, 0x64, 0x20, 0x6f, 0x75, 0x74, 0x2c, 0x20,
+    0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x20, 0x3d, 0x20, 0x49, 0x6e, 0x66, 0x69, 0x6e, 0x69, 0x74,
+    0x65, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x2e, 0x0a, 0x20, 0x20, 0x4f, 0x66, 0x66, 0x73, 0x65,
+    0x74, 0x20, 0x61, 0x6e, 0x64, 0x20, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x20, 0x61, 0x72, 0x65, 0x20,
+    0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x64, 0x20, 0x75, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x74,
+    0x68, 0x65, 0x20, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x20, 0x63, 0x6c, 0x6f, 0x63, 0x6b, 0x20,
+    0x72, 0x65, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x20, 0x74, 0x65, 0x63, 0x68, 0x6e, 0x69, 0x71, 0x75,
+    0x65, 0x0a, 0x20, 0x20, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x64, 0x20, 0x69, 0x6e,
+    0x20, 0x68, 0x74, 0x74, 0x70, 0x3a, 0x2f, 0x2f, 0x73, 0x65, 0x2e, 0x69, 0x6e, 0x66, 0x2e, 0x74,
+    0x75, 0x2d, 0x64, 0x72, 0x65, 0x73, 0x64, 0x65, 0x6e, 0x2e, 0x64, 0x65, 0x2f, 0x70, 0x75, 0x62,
+    0x73, 0x2f, 0x70, 0x61, 0x70, 0x65, 0x72, 0x73, 0x2f, 0x53, 0x52, 0x44, 0x53, 0x31, 0x39, 0x39,
+    0x34, 0x2e, 0x70, 0x64, 0x66, 0x2c, 0x20, 0x70, 0x61, 0x67, 0x65, 0x20, 0x36, 0x2e, 0x0a, 0x0a,
+    0x0a, 0x0a, 0x03, 0x04, 0x00, 0x01, 0x12, 0x03, 0x0c, 0x08, 0x14, 0x0a, 0x4b, 0x0a, 0x04, 0x04,
+    0x00, 0x02, 0x00, 0x12, 0x03, 0x0e, 0x02, 0x1c, 0x1a, 0x3e, 0x20, 0x54, 0x68, 0x65, 0x20, 0x65,
+    0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x64, 0x20, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x20,
+    0x66, 0x72, 0x6f, 0x6d, 0x20, 0x74, 0x68, 0x65, 0x20, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x20,
+    0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2c, 0x20, 0x69, 0x6e, 0x20, 0x6e, 0x61, 0x6e, 0x6f, 0x73,
+    0x65, 0x63, 0x6f, 0x6e, 0x64, 0x73, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x00,
+    0x04, 0x12, 0x03, 0x0e, 0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x00, 0x05, 0x12,
+    0x03, 0x0e, 0x0b, 0x10, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x00, 0x01, 0x12, 0x03, 0x0e,
+    0x11, 0x17, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x00, 0x03, 0x12, 0x03, 0x0e, 0x1a, 0x1b,
+    0x0a, 0x48, 0x0a, 0x04, 0x04, 0x00, 0x02, 0x01, 0x12, 0x03, 0x10, 0x02, 0x1b, 0x1a, 0x3b, 0x20,
+    0x54, 0x68, 0x65, 0x20, 0x6d, 0x61, 0x78, 0x69, 0x6d, 0x75, 0x6d, 0x20, 0x65, 0x72, 0x72, 0x6f,
+    0x72, 0x20, 0x6f, 0x66, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65,
+    0x64, 0x20, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x2c, 0x20, 0x69, 0x6e, 0x20, 0x6e, 0x61, 0x6e,
+    0x6f, 0x73, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x73, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00,
+    0x02, 0x01, 0x04, 0x12, 0x03, 0x10, 0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x01,
+    0x05, 0x12, 0x03, 0x10, 0x0b, 0x10, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x01, 0x01, 0x12,
+    0x03, 0x10, 0x11, 0x16, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x01, 0x03, 0x12, 0x03, 0x10,
+    0x19, 0x1a, 0x0a, 0x40, 0x0a, 0x04, 0x04, 0x00, 0x02, 0x02, 0x12, 0x03, 0x12, 0x02, 0x21, 0x1a,
+    0x33, 0x20, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x20, 0x74, 0x69,
+    0x6d, 0x65, 0x2c, 0x20, 0x69, 0x6e, 0x20, 0x6e, 0x61, 0x6e, 0x6f, 0x73, 0x65, 0x63, 0x6f, 0x6e,
+    0x64, 0x73, 0x20, 0x66, 0x72, 0x6f, 0x6d, 0x20, 0x75, 0x6e, 0x69, 0x78, 0x20, 0x65, 0x70, 0x6f,
+    0x63, 0x68, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x02, 0x04, 0x12, 0x03, 0x12,
+    0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x02, 0x05, 0x12, 0x03, 0x12, 0x0b, 0x10,
+    0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x00, 0x02, 0x02, 0x01, 0x12, 0x03, 0x12, 0x11, 0x1c, 0x0a, 0x0c,
+    0x0a, 0x05, 0x04, 0x00, 0x02, 0x02, 0x03, 0x12, 0x03, 0x12, 0x1f, 0x20, 0x0a, 0x8d, 0x01, 0x0a,
+    0x02, 0x04, 0x01, 0x12, 0x04, 0x17, 0x00, 0x1e, 0x01, 0x1a, 0x80, 0x01, 0x20, 0x41, 0x20, 0x50,
+    0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x20, 0x73, 0x70, 0x65, 0x63, 0x69,
+    0x66, 0x69, 0x65, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x20,
+    0x74, 0x6f, 0x20, 0x65, 0x63, 0x68, 0x6f, 0x20, 0x69, 0x6e, 0x20, 0x72, 0x65, 0x73, 0x70, 0x6f,
+    0x6e, 0x73, 0x65, 0x2e, 0x0a, 0x20, 0x20, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x20, 0x61, 0x72,
+    0x65, 0x20, 0x65, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x20, 0x73, 0x6f, 0x20, 0x74, 0x68,
+    0x61, 0x74, 0x20, 0x74, 0x68, 0x65, 0x79, 0x20, 0x77, 0x69, 0x6c, 0x6c, 0x20, 0x62, 0x65, 0x20,
+    0x73, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x64, 0x20, 0x69, 0x6e, 0x20, 0x74, 0x68,
+    0x65, 0x20, 0x72, 0x70, 0x63, 0x20, 0x63, 0x61, 0x6c, 0x6c, 0x2e, 0x0a, 0x0a, 0x0a, 0x0a, 0x03,
+    0x04, 0x01, 0x01, 0x12, 0x03, 0x17, 0x08, 0x13, 0x0a, 0x32, 0x0a, 0x04, 0x04, 0x01, 0x02, 0x00,
+    0x12, 0x03, 0x19, 0x02, 0x1b, 0x1a, 0x25, 0x20, 0x45, 0x63, 0x68, 0x6f, 0x20, 0x74, 0x68, 0x69,
+    0x73, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x20, 0x77, 0x69, 0x74, 0x68, 0x20, 0x50, 0x69,
+    0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05,
+    0x04, 0x01, 0x02, 0x00, 0x04, 0x12, 0x03, 0x19, 0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01,
+    0x02, 0x00, 0x05, 0x12, 0x03, 0x19, 0x0b, 0x11, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x00,
+    0x01, 0x12, 0x03, 0x19, 0x12, 0x16, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x00, 0x03, 0x12,
+    0x03, 0x19, 0x19, 0x1a, 0x0a, 0x43, 0x0a, 0x04, 0x04, 0x01, 0x02, 0x01, 0x12, 0x03, 0x1b, 0x02,
+    0x34, 0x1a, 0x36, 0x20, 0x54, 0x68, 0x65, 0x20, 0x6c, 0x61, 0x73, 0x74, 0x20, 0x6f, 0x66, 0x66,
+    0x73, 0x65, 0x74, 0x20, 0x74, 0x68, 0x65, 0x20, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x20, 0x6d,
+    0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x64, 0x20, 0x77, 0x69, 0x74, 0x68, 0x20, 0x74, 0x68, 0x65,
+    0x20, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02,
+    0x01, 0x04, 0x12, 0x03, 0x1b, 0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x01, 0x06,
+    0x12, 0x03, 0x1b, 0x0b, 0x28, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x01, 0x01, 0x12, 0x03,
+    0x1b, 0x29, 0x2f, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x01, 0x03, 0x12, 0x03, 0x1b, 0x32,
+    0x33, 0x0a, 0x29, 0x0a, 0x04, 0x04, 0x01, 0x02, 0x02, 0x12, 0x03, 0x1d, 0x02, 0x1b, 0x1a, 0x1c,
+    0x20, 0x54, 0x68, 0x65, 0x20, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x20, 0x6f, 0x66, 0x20,
+    0x74, 0x68, 0x65, 0x20, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x0a, 0x0a, 0x0c, 0x0a, 0x05,
+    0x04, 0x01, 0x02, 0x02, 0x04, 0x12, 0x03, 0x1d, 0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01,
+    0x02, 0x02, 0x05, 0x12, 0x03, 0x1d, 0x0b, 0x11, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x02,
+    0x01, 0x12, 0x03, 0x1d, 0x12, 0x16, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x01, 0x02, 0x02, 0x03, 0x12,
+    0x03, 0x1d, 0x19, 0x1a, 0x0a, 0x45, 0x0a, 0x02, 0x04, 0x02, 0x12, 0x04, 0x21, 0x00, 0x25, 0x01,
+    0x1a, 0x39, 0x20, 0x41, 0x20, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+    0x65, 0x20, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20, 0x65,
+    0x63, 0x68, 0x6f, 0x65, 0x64, 0x20, 0x70, 0x69, 0x6e, 0x67, 0x20, 0x72, 0x65, 0x71, 0x75, 0x65,
+    0x73, 0x74, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2e, 0x0a, 0x0a, 0x0a, 0x0a, 0x03, 0x04,
+    0x02, 0x01, 0x12, 0x03, 0x21, 0x08, 0x14, 0x0a, 0x36, 0x0a, 0x04, 0x04, 0x02, 0x02, 0x00, 0x12,
+    0x03, 0x23, 0x02, 0x1b, 0x1a, 0x29, 0x20, 0x41, 0x6e, 0x20, 0x65, 0x63, 0x68, 0x6f, 0x20, 0x6f,
+    0x66, 0x20, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x20, 0x73, 0x65, 0x6e, 0x74, 0x20, 0x77, 0x69, 0x74,
+    0x68, 0x20, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x0a, 0x0a,
+    0x0c, 0x0a, 0x05, 0x04, 0x02, 0x02, 0x00, 0x04, 0x12, 0x03, 0x23, 0x02, 0x0a, 0x0a, 0x0c, 0x0a,
+    0x05, 0x04, 0x02, 0x02, 0x00, 0x05, 0x12, 0x03, 0x23, 0x0b, 0x11, 0x0a, 0x0c, 0x0a, 0x05, 0x04,
+    0x02, 0x02, 0x00, 0x01, 0x12, 0x03, 0x23, 0x12, 0x16, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x02, 0x02,
+    0x00, 0x03, 0x12, 0x03, 0x23, 0x19, 0x1a, 0x0a, 0x0b, 0x0a, 0x04, 0x04, 0x02, 0x02, 0x01, 0x12,
+    0x03, 0x24, 0x02, 0x21, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x02, 0x02, 0x01, 0x04, 0x12, 0x03, 0x24,
+    0x02, 0x0a, 0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x02, 0x02, 0x01, 0x05, 0x12, 0x03, 0x24, 0x0b, 0x10,
+    0x0a, 0x0c, 0x0a, 0x05, 0x04, 0x02, 0x02, 0x01, 0x01, 0x12, 0x03, 0x24, 0x11, 0x1c, 0x0a, 0x0c,
+    0x0a, 0x05, 0x04, 0x02, 0x02, 0x01, 0x03, 0x12, 0x03, 0x24, 0x1f, 0x20,
+];
+
+static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
+    lock: ::protobuf::lazy::ONCE_INIT,
+    ptr: 0 as *const ::protobuf::descriptor::FileDescriptorProto,
+};
+
+fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
+    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
+}
+
+pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
+    unsafe {
+        file_descriptor_proto_lazy.get(|| {
+            parse_descriptor_proto()
+        })
+    }
+}

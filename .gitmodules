@@ -1,0 +1,3 @@
+[submodule "cockroach-proto"]
+	path = cockroach-proto
+	url = git@github.com:cockroachdb/cockroach-proto.git
