@@ -3,8 +3,8 @@ name = "cr"
 version = "0.1.0"
 authors = ["Tobias Schottdorf <tobias.schottdorf@gmail.com>"]
 
-[dependencies.protobuf]
-git = "https://github.com/stepancheg/rust-protobuf.git"
+[dependencies]
+protobuf = "1.0.0"
 
 [dependencies.hyper]
 git = "https://github.com/hyperium/hyper"
