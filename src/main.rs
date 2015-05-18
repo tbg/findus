@@ -18,6 +18,12 @@ mod config;
 mod data;
 mod errors;
 
+struct Call {
+    args: Box<api::RequestUnion>,
+    reply: Box<api::ResponseUnion>,
+    //post: fn() -> Option<errors::Error>,
+}
+
 fn main() {
     let mut gr = api::PutRequest::new();
     println!("{}", gr.has_header());
@@ -34,6 +40,13 @@ fn main() {
 
     let mut client = Client::new();
     let resp = client.send(&gr);
+
+    let mut c: Call = Call{
+        args: Box::new(api::RequestUnion::new()),
+        reply: Box::new(api::ResponseUnion::new())
+    };
+    c.args.set_put(gr);
+    c.reply.set_put(resp.clone().unwrap());
     let stderr = errors::Error::new();
     let ref err = match resp {
         Ok(ref resp) => resp.get_header().get_error(),
