@@ -3,6 +3,7 @@ extern crate protobuf;
 extern crate hyper;
 
 use std::io::Read;
+use std::io;
 use std::string::String;
 use std::vec::Vec;
 
@@ -53,15 +54,33 @@ fn main() {
         &mut putResp,
     );
 
-    println!("{}", putResp.get_header().get_timestamp().get_wall_time());
+    println!("ts={}", putResp.get_header().get_timestamp().get_wall_time());
+    println!("error={}", putResp.get_header().get_error().get_message());
 }
 
 trait KVSender {
-    fn send(&mut self, &Message, &mut Message);
+    fn send(&mut self, &Message, &mut Response);
 }
 
+trait Response : Message {
+    fn mut_header(&mut self) -> &mut api::ResponseHeader;
+}
+
+impl Response for api::PutResponse {
+    fn mut_header(&mut self) -> &mut api::ResponseHeader {
+        self.mut_header()
+    }
+    
+}
+
+pub enum SendError {
+    IoError(io::Error),
+    WireError(String),
+}
+
+
 impl KVSender for Client {
-    fn send(&mut self, args: &Message, reply: &mut Message) {
+    fn send(&mut self, args: &Message, reply: &mut Response) {
         let enc = args.write_to_bytes().unwrap();
         //reply.merge_from_bytes(&enc);
 
@@ -74,11 +93,20 @@ impl KVSender for Client {
         match res {
             Ok(mut resp) => match resp.status {
                 StatusCode::Ok => {
-                    let proto_res = reply.merge_from(&mut protobuf::CodedInputStream::new(&mut resp));
+                    // TODO check unmarshal error.
+                    reply.merge_from(&mut protobuf::CodedInputStream::new(&mut resp));
                 },
-                _ => {},
+                _ => {
+                    let mut err = errors::Error::new();
+                    err.set_message("error unmarshaling".to_owned());
+                    reply.mut_header().set_error(err)
+                }
             },
-            _ => {},
+            _ => {
+                let mut err = errors::Error::new();
+                err.set_message("request error".to_owned());
+                reply.mut_header().set_error(err)
+            },
         }
     }
 }
