@@ -2,6 +2,7 @@
 extern crate protobuf;
 extern crate hyper;
 
+use std::env;
 use std::io::Read;
 use std::io;
 use std::string::String;
@@ -41,6 +42,13 @@ impl api::PutRequest {
 }
 
 fn main() {
+    let key = "COCKROACH_PORT";
+    let addr = match env::var(key) {
+        Ok(val) => val,
+        Err(e)  => "tcp://localhost:8080".to_owned(),
+    }.replace("tcp://", "http://");
+    println!("connecting to {}", addr);
+
     let mut putArgs = api::PutRequest::new();
     let mut putResp = putArgs.reply();
     putArgs.mut_header().set_raft_id(1);
