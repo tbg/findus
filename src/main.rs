@@ -55,7 +55,7 @@ fn main() {
     putArgs.mut_header().set_user("root".to_owned());
     putArgs.mut_header().set_key(b"tkey".to_vec());
 
-    let mut sender = Client::new();
+    let mut sender = HTTPSender::new(addr);
 
     let e = sender.send(
         &putArgs,
@@ -86,15 +86,29 @@ pub enum SendError {
     WireError(String),
 }
 
+struct HTTPSender {
+    client: Client,
+    addr: String,
+}
 
-impl KVSender for Client {
+impl HTTPSender {
+    pub fn new(addr: String) -> HTTPSender {
+        HTTPSender{
+            client: hyper::Client::new(),
+            addr: addr,
+        }
+    }
+}
+
+
+impl KVSender for HTTPSender {
     fn send(&mut self, args: &Message, reply: &mut Response) {
         let enc = args.write_to_bytes().unwrap();
         //reply.merge_from_bytes(&enc);
 
         let mut headers = Headers::new();
         headers.set(ContentType("application/x-protobuf".parse().unwrap()));
-        let res = self.post("http://localhost:8080/kv/db/Put")
+        let res = self.client.post(&self.addr)
             .body(&*enc) // or &enc[..]
             .headers(headers)
             .send();
