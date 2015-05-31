@@ -17,14 +17,15 @@ use hyper::header::ContentType;
 use hyper::header::Headers;
 use hyper::mime::Mime;
 
+use call::Request;
+
 mod api;
 mod config;
 mod data;
 mod errors;
 
-trait Request {
-    fn mut_header(&mut self) -> &mut api::RequestHeader;
-}
+mod call;
+
 
 //impl Request for api::PutRequest {
     // TODO:
@@ -40,45 +41,41 @@ impl api::PutRequest {
         api::PutResponse::new()
     }
 }
+//
+//impl api::GetRequest {
+//    fn reply(&self) -> api::GetResponse {
+//        api::GetResponse::new()
+//    }
+//}
 
-fn main() {
+#[test]
+fn make_call() {
     let key = "COCKROACH_PORT";
     let addr = match env::var(key) {
         Ok(val) => val,
         Err(e)  => "tcp://localhost:8080".to_owned(),
     }.replace("tcp://", "http://");
-    println!("connecting to {}", addr);
-
-    let mut putArgs = api::PutRequest::new();
-    let mut putResp = putArgs.reply();
-    putArgs.mut_header().set_raft_id(1);
-    putArgs.mut_header().set_user("root".to_owned());
-    putArgs.mut_header().set_key(b"tkey".to_vec());
+    println!("http endpoint is {}", addr);
 
     let mut sender = HTTPSender::new(addr);
 
+    let mut c = call::Call::put();
+
+    {
+        let args_header = c.args.mut_header();
+        args_header.set_raft_id(1);
+        args_header.set_user("root".to_owned());
+        args_header.set_key(b"tkey".to_vec());
+    }
+
     let e = sender.send(
-        &putArgs,
-        &mut putResp,
+        c
+        //&putArgs,
+        //&mut putResp,
     );
 
-    println!("ts={}", putResp.get_header().get_timestamp().get_wall_time());
-    println!("error={}", putResp.get_header().get_error().get_message());
-}
-
-trait KVSender {
-    fn send(&mut self, &Message, &mut Response);
-}
-
-trait Response : Message {
-    fn mut_header(&mut self) -> &mut api::ResponseHeader;
-}
-
-impl Response for api::PutResponse {
-    fn mut_header(&mut self) -> &mut api::ResponseHeader {
-        self.mut_header()
-    }
-    
+    println!("ts={}", call.reply.get_header().get_timestamp().get_wall_time());
+    println!("error={}", call.reply.get_header().get_error().get_message());
 }
 
 pub enum SendError {
@@ -100,11 +97,15 @@ impl HTTPSender {
     }
 }
 
+trait KVSender {
+    //fn send(&mut self, &call::Request) -> Box<call::Response>;
+    fn send(&mut self, &mut call::Call);
+}
 
 impl KVSender for HTTPSender {
-    fn send(&mut self, args: &Message, reply: &mut Response) {
-        let enc = args.write_to_bytes().unwrap();
-        //reply.merge_from_bytes(&enc);
+    fn send(&mut self, c: &mut call::Call) {
+        let enc = c.args.write_to_bytes().unwrap();
+        let reply = &mut c.reply;
 
         let mut headers = Headers::new();
         headers.set(ContentType("application/x-protobuf".parse().unwrap()));
