@@ -7,6 +7,7 @@ use std::io::Read;
 use std::io;
 use std::string::String;
 use std::vec::Vec;
+use std::error::Error;
 
 use protobuf::parse_from_bytes;
 use protobuf::Message;
@@ -27,33 +28,12 @@ mod errors;
 mod call;
 
 
-//impl Request for api::PutRequest {
-    // TODO:
-    // macro_rules! impl_trait { ($($ty:ty),*) => { $(impl Trait for $ty { fn foo(&self) -> … { … self.get_header() … } })* } }
-    // impl_trait!(api::PutRequest, ...)
-//    fn mut_header(&mut self) -> &mut api::RequestHeader {
-//        self.mut_header()
-//    }
-//}
-
-impl api::PutRequest {
-    fn reply(&self) -> api::PutResponse {
-        api::PutResponse::new()
-    }
-}
-//
-//impl api::GetRequest {
-//    fn reply(&self) -> api::GetResponse {
-//        api::GetResponse::new()
-//    }
-//}
-
 #[test]
 fn make_call() {
     let key = "COCKROACH_PORT";
     let addr = match env::var(key) {
         Ok(val) => val,
-        Err(e)  => "tcp://localhost:8080".to_owned(),
+        Err(_)  => "tcp://localhost:8080".to_owned(),
     }.replace("tcp://", "http://");
     println!("http endpoint is {}", addr);
 
@@ -68,19 +48,10 @@ fn make_call() {
         args_header.set_key(b"tkey".to_vec());
     }
 
-    let e = sender.send(
-        c
-        //&putArgs,
-        //&mut putResp,
-    );
+    let e = sender.send(&mut c);
 
-    println!("ts={}", call.reply.get_header().get_timestamp().get_wall_time());
-    println!("error={}", call.reply.get_header().get_error().get_message());
-}
-
-pub enum SendError {
-    IoError(io::Error),
-    WireError(String),
+    println!("ts={}", c.reply.mut_header().get_timestamp().get_wall_time());
+    println!("error={}", c.reply.mut_header().get_error().get_message());
 }
 
 struct HTTPSender {
@@ -98,7 +69,6 @@ impl HTTPSender {
 }
 
 trait KVSender {
-    //fn send(&mut self, &call::Request) -> Box<call::Response>;
     fn send(&mut self, &mut call::Call);
 }
 
@@ -117,11 +87,18 @@ impl KVSender for HTTPSender {
             Ok(mut resp) => match resp.status {
                 StatusCode::Ok => {
                     // TODO check unmarshal error.
-                    reply.merge_from(&mut protobuf::CodedInputStream::new(&mut resp));
+                    match reply.merge_from(&mut protobuf::CodedInputStream::new(&mut resp)) {
+                        Err(e) => {
+                            let mut err = errors::Error::new();
+                            err.set_message(e.description().to_owned());
+                            reply.mut_header().set_error(err)
+                        },
+                        _ => {},
+                    }
                 },
                 _ => {
                     let mut err = errors::Error::new();
-                    err.set_message("error unmarshaling".to_owned());
+                    err.set_message("unexpected response code".to_owned());
                     reply.mut_header().set_error(err)
                 }
             },
