@@ -8,6 +8,7 @@ use std::io;
 use std::string::String;
 use std::vec::Vec;
 use std::error::Error;
+use std::fmt::Display;
 
 use protobuf::parse_from_bytes;
 use protobuf::Message;
@@ -16,7 +17,6 @@ use hyper::Client;
 use hyper::status::StatusCode;
 use hyper::header::ContentType;
 use hyper::header::Headers;
-use hyper::mime::Mime;
 
 use call::Request;
 
@@ -26,6 +26,18 @@ mod data;
 mod errors;
 
 mod call;
+
+impl Display for errors::Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
+        self.get_message().fmt(f)
+    }
+}
+
+impl Error for errors::Error {
+    fn description(&self) -> &str {
+        return self.get_message();
+    }
+}
 
 
 #[test]
@@ -51,10 +63,11 @@ fn make_call() {
     let e = sender.send(&mut c);
 
     println!("ts={}", c.reply.mut_header().get_timestamp().get_wall_time());
-    println!("error={}", c.reply.mut_header().get_error().get_message());
+    println!("error={}", c.reply.mut_header().get_error());
+    assert!(!c.reply.mut_header().get_error().has_message());
 }
 
-struct HTTPSender {
+pub struct HTTPSender {
     client: Client,
     addr: String,
 }
@@ -79,6 +92,7 @@ impl KVSender for HTTPSender {
 
         let mut headers = Headers::new();
         headers.set(ContentType("application/x-protobuf".parse().unwrap()));
+        // TODO retry logic (on HTTP errors)
         let res = self.client.post(&self.addr)
             .body(&*enc) // or &enc[..]
             .headers(headers)
@@ -86,7 +100,6 @@ impl KVSender for HTTPSender {
         match res {
             Ok(mut resp) => match resp.status {
                 StatusCode::Ok => {
-                    // TODO check unmarshal error.
                     match reply.merge_from(&mut protobuf::CodedInputStream::new(&mut resp)) {
                         Err(e) => {
                             let mut err = errors::Error::new();
