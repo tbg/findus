@@ -10,3 +10,5 @@ rusttest:
   build: .
   links:
     - cockroach
+  volumes:
+    - target/debug:/work

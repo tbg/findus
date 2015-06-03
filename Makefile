@@ -17,6 +17,9 @@ test:
 # an empty database.
 .PHONY: dockertest
 dockertest:
+	-rm -f target/debug/cockroach
+	cargo test --no-run
+	(cd target/debug && ln -s cockroach-* cockroach)
 	-docker-compose stop
 	-docker-compose rm --force -v cockroach
 	-rm -rf /tmp/test-disk1

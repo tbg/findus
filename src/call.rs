@@ -55,7 +55,7 @@ impl Call {
             reply: reply,
         }
     }
-    // TODO macro for all of these.
+    // TODO implement all of these.
     pub fn put() -> Call {
         Call::from_req(Box::new(::api::PutRequest::new()) as Box<Request>)
     }

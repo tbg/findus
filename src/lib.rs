@@ -10,9 +10,6 @@ use std::vec::Vec;
 use std::error::Error;
 use std::fmt::Display;
 
-use protobuf::parse_from_bytes;
-use protobuf::Message;
-
 use hyper::Client;
 use hyper::status::StatusCode;
 use hyper::header::ContentType;
@@ -20,12 +17,13 @@ use hyper::header::Headers;
 
 use call::Request;
 
-mod api;
-mod config;
-mod data;
-mod errors;
+// Protos
+pub mod api;
+pub mod config;
+pub mod data;
+pub mod errors;
 
-mod call;
+pub mod call;
 
 impl Display for errors::Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
@@ -81,12 +79,12 @@ impl HTTPSender {
     }
 }
 
-trait KVSender {
+trait Sender {
     fn send(&mut self, &mut call::Call);
 }
 
-impl KVSender for HTTPSender {
-    fn send(&mut self, c: &mut call::Call) {
+impl HTTPSender {
+    pub fn send(&mut self, c: &mut call::Call) {
         let enc = c.args.write_to_bytes().unwrap();
         let reply = &mut c.reply;
 
@@ -121,5 +119,11 @@ impl KVSender for HTTPSender {
                 reply.mut_header().set_error(err)
             },
         }
+    }
+}
+
+impl Sender for HTTPSender {
+    fn send(&mut self, c: &mut call::Call) {
+        self.send(c)
     }
 }
