@@ -1,6 +1,7 @@
 use protobuf::Message;
 
 pub trait Request : Message {
+    fn method(&self) -> &str;
     fn mut_header(&mut self) -> &mut ::api::RequestHeader;
     fn create_reply(&self) -> Box<Response>;
 }
@@ -23,8 +24,11 @@ macro_rules! impl_response {
 // Would look more elegant if the response type were passed in instead of the constructor,
 // but macro hygiene doesn't let you call the static method ::new() then.
 macro_rules! impl_request {
-    ($([$ta:ty, $cons:expr]),*) => {
+    ($([$nm:expr, $ta:ty, $cons:expr]),*) => {
         $(impl Request for $ta {
+            fn method(&self) -> &str {
+                return $nm;
+            }
             fn mut_header(&mut self) -> &mut ::api::RequestHeader {
                 self.mut_header()
             } 
@@ -36,8 +40,8 @@ macro_rules! impl_request {
 }
 
 impl_request!(
-    [::api::PutRequest, ::api::PutResponse::new],
-    [::api::GetRequest, ::api::GetResponse::new]
+    ["Put", ::api::PutRequest, ::api::PutResponse::new],
+    ["Get", ::api::GetRequest, ::api::GetResponse::new]
 );
 
 impl_response!(::api::PutResponse, ::api::GetResponse);

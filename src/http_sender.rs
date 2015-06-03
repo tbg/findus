@@ -85,7 +85,8 @@ impl HTTPSender {
         let mut headers = Headers::new();
         headers.set(ContentType("application/x-protobuf".parse().unwrap()));
         // TODO retry logic (on HTTP errors)
-        let res = self.client.post(&self.addr)
+        let endpoint = self.addr.clone() + "/kv/db/" + c.args.method();
+        let res = self.client.post(&endpoint)
             .body(&*enc) // or &enc[..]
             .headers(headers)
             .send();
@@ -103,7 +104,8 @@ impl HTTPSender {
                 },
                 _ => {
                     let mut err = errors::Error::new();
-                    err.set_message("unexpected response code".to_owned());
+                    err.set_message(format!("unexpected response status: {}",
+                                            resp.status));
                     reply.mut_header().set_error(err)
                 }
             },
