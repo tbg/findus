@@ -13,8 +13,7 @@ use hyper::header::Headers;
 
 use errors;
 use call;
-
-use call::Request;
+use sender;
 
 #[cfg(test)]
 mod http_sender_test {
@@ -71,13 +70,6 @@ impl HTTPSender {
             addr: addr,
         }
     }
-}
-
-trait Sender {
-    fn send(&mut self, &mut call::Call);
-}
-
-impl HTTPSender {
     pub fn send(&mut self, c: &mut call::Call) {
         let enc = c.args.write_to_bytes().unwrap();
         let reply = &mut c.reply;
@@ -118,7 +110,7 @@ impl HTTPSender {
     }
 }
 
-impl Sender for HTTPSender {
+impl sender::Sender for HTTPSender {
     fn send(&mut self, c: &mut call::Call) {
         self.send(c)
     }
