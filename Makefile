@@ -31,4 +31,4 @@ dockertest:
 	docker-compose run cockroach init --stores=hdd=/data
 	docker-compose start cockroach
 	docker-compose run rusttest
-	docker-compose stop
+	docker-compose stop --timeout 0
