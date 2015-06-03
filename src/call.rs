@@ -20,8 +20,8 @@ macro_rules! impl_response {
 }
 
 // Implement request for the given type, with the given constructor for the response.
-// Would look more elegant if the response type was passed in instead of the constructor,
-// but macro hygiene doesn't let you call ::new() then.
+// Would look more elegant if the response type were passed in instead of the constructor,
+// but macro hygiene doesn't let you call the static method ::new() then.
 macro_rules! impl_request {
     ($([$ta:ty, $cons:expr]),*) => {
         $(impl Request for $ta {
