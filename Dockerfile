@@ -8,4 +8,4 @@ COPY target/debug /work
 
 WORKDIR /work
 
-ENTRYPOINT "/work/cockroach"
+ENTRYPOINT "/work/rustroach"

@@ -67,8 +67,3 @@ impl Call {
         Call::from_req(Box::new(::api::GetRequest::new()) as Box<Request>)
     }
 }
-
-#[test]
-fn create() {
-    Call::put();
-}

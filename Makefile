@@ -7,19 +7,13 @@ proto:
 
 .PHONY: test
 test:
-	tox --skip-missing-interpreters
+	cargo test
 
-# In theory we should just be able to do docker-compose build &&
-# docker-compose run cockroachpython, but docker-compose doesn't
-# seem to create the network links except when the server is launched
-# with start/stop.
-# We also need to delete the cockroach container first to start from
-# an empty database.
 .PHONY: dockertest
 dockertest:
-	-rm -f target/debug/cockroach
+	-rm -f target/debug/rustroach
 	cargo test --no-run
-	(cd target/debug && ln -s cockroach-* cockroach)
+	(cd target/debug && ln -s rustroach-* rustroach)
 	-docker-compose stop
 	-docker-compose rm --force -v cockroach
 	-rm -rf /tmp/test-disk1
