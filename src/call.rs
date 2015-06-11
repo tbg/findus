@@ -3,7 +3,6 @@ use protobuf::Message;
 pub trait Request : Message {
     fn method(&self) -> &str;
     fn mut_header(&mut self) -> &mut ::api::RequestHeader;
-    fn create_reply(&self) -> Box<Response>;
 }
 
 pub trait Response : Message {
@@ -16,7 +15,8 @@ macro_rules! impl_response {
             fn mut_header(&mut self) -> &mut ::api::ResponseHeader {
                 self.mut_header()
             }
-        })*
+        }
+        )*
     }
 }
 
@@ -24,7 +24,7 @@ macro_rules! impl_response {
 // Would look more elegant if the response type were passed in instead of the constructor,
 // but macro hygiene doesn't let you call the static method ::new() then.
 macro_rules! impl_request {
-    ($([$nm:expr, $ta:ty, $cons:expr]),*) => {
+    ($([$nm:expr, $ta:ty]),*) => {
         $(impl Request for $ta {
             fn method(&self) -> &str {
                 return $nm;
@@ -32,38 +32,48 @@ macro_rules! impl_request {
             fn mut_header(&mut self) -> &mut ::api::RequestHeader {
                 self.mut_header()
             } 
-            fn create_reply(&self) -> Box<Response> {
-                Box::new($cons()) as Box<Response>
-            }
         })*
     }
 }
 
 impl_request!(
-    ["Put", ::api::PutRequest, ::api::PutResponse::new],
-    ["Get", ::api::GetRequest, ::api::GetResponse::new]
+    ["Put", ::api::PutRequest],
+    ["Get", ::api::GetRequest]
 );
 
 impl_response!(::api::PutResponse, ::api::GetResponse);
 
-pub struct Call {
-    pub args:  Box<Request>,
-    pub reply: Box<Response>,
+pub struct Call<Rq, Rs> {
+    pub args:  Rq,
+    pub reply: Rs,
 }
 
-impl Call {
-    fn from_req(args: Box<Request>) -> Call {
-        let reply = args.create_reply();
-        Call {
+impl<Rq, Rs> Call<Rq, Rs> {
+    fn new(args: Rq, reply: Rs) -> Call<Rq, Rs> {
+        Call::<Rq,Rs> {
             args: args,
             reply: reply,
         }
     }
-    // TODO implement all of these.
-    pub fn put() -> Call {
-        Call::from_req(Box::new(::api::PutRequest::new()) as Box<Request>)
+}
+impl<Rq, Rs> Call<Rq, Rs> where Rq : Request, Rs : Response {
+    pub fn generic(self) -> Call<Box<Request>, Box<Response>> {
+        Call::<_,_> {
+            args: Box::new(self.args) as Box<Request>,
+            reply: Box::new(self.reply) as Box<Response>,
+        }
     }
-    pub fn get() -> Call {
-        Call::from_req(Box::new(::api::GetRequest::new()) as Box<Request>)
-    }
+}
+
+pub fn put() -> Call<::api::PutRequest, ::api::PutResponse> {
+    Call::new(::api::PutRequest::new(), ::api::PutResponse::new())
+}
+
+pub fn get() -> Call<::api::GetRequest, ::api::GetResponse> {
+    Call::new(::api::GetRequest::new(), ::api::GetResponse::new())
+}
+
+#[test]
+fn it_works() {
+    let mut c = put();
 }
